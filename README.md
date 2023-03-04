@@ -1,2 +1,2 @@
 # til
-Today I leraned.
+Today I learned.
