@@ -1,5 +1,5 @@
 class Rectangle {
-  readonly name = 'rectangle';
+  name = 'rectangle';
   sideA: number;
   sideB: number;
 

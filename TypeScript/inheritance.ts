@@ -1,4 +1,4 @@
-class Square extends Rectangle {
+class SquareDup extends Rectangle {
   readonly name = 'square';
   side: number;
 
