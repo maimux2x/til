@@ -30,3 +30,69 @@ order.credit_card_payment_method?    # payment_methodが:credit_cardかどうか
 order.bank_transfer_payment_method?  # payment_methodが:bank_transferかどうかをチェック
 order.paypal_payment_method?         # payment_methodが:paypalかどうかをチェック
 ```
+
+`ActibeRecord::Enum` はスコープ、インスタンスメソッド、クラスメソッドなどを自動で定義してくれる。
+
+```ruby
+class Conversation < ApplicationRecord
+  enum :status, [:active, :archived]
+end
+```
+
+内部的には以下のようにマッピングされる。
+
+```
+active   => 0
+archived => 1
+```
+
+### 各 enum 値ごとのスコープ
+
+```ruby
+Conversation.active
+Conversation.archived
+```
+
+```sql
+SELECT * FROM conversations WHERE status = 0;
+SELECT * FROM conversations WHERE status = 1;
+```
+
+### 否定スコープ
+
+```ruby
+Conversation.not_active
+Conversation.not_archived
+```
+
+```sql
+SELECT * FROM conversations WHERE status != 0;
+SELECT * FROM conversations WHERE status != 1;
+```
+
+### メソッド
+
+```ruby
+conversation.active?
+conversation.archived?
+
+# 上記は以下をラップしたもの
+
+conversation.status == "active"
+conversation.status == "archived"
+```
+
+### ! メソッド（更新 + save）
+
+```ruby
+conversation.active!
+conversation.archived!
+
+# 以下と同等の意味
+# DBに即保存される
+
+conversation.update!(status: "active")
+conversation.update!(status: "archived")
+```
+
+
