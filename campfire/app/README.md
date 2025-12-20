@@ -75,9 +75,9 @@ classDiagram
           client_message_id
       }
 
-      User "1" --> "*" Room : creates
-      User "1" --> "*" Message : creates
-      User "1" --> "*" Membership : has
-      Room "1" --> "*" Membership : has
-      Room "1" --> "*" Message : contains
+      User "1" -- "*" Room : creates
+      User "1" -- "*" Message : creates
+      User "1" -- "*" Membership : has
+      Room "1" -- "*" Membership : has
+      Room "1" -- "*" Message : contains
 ```
