@@ -41,3 +41,43 @@ app/views/rooms/show.html.erb (ルーム画面)
 app/views/rooms/show/_composer.html.erb (メッセージ入力欄)
 
 app/views/messages/ (メッセージ表示)
+
+```mermaid
+classDiagram
+      class User {
+          id
+          name
+          email_address
+          role
+          status
+      }
+
+      class Room {
+          id
+          name
+          type
+          creator_id
+      }
+
+      class Membership {
+          room_id
+          user_id
+          involvement
+          unread_at
+          connections
+          connected_at
+      }
+
+      class Message {
+          id
+          room_id
+          creator_id
+          client_message_id
+      }
+
+      User "1" --> "*" Room : creates
+      User "1" --> "*" Message : creates
+      User "1" --> "*" Membership : has
+      Room "1" --> "*" Membership : has
+      Room "1" --> "*" Message : contains
+```
