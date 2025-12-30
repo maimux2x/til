@@ -95,4 +95,12 @@ conversation.update!(status: "active")
 conversation.update!(status: "archived")
 ```
 
+### Memo
 
+enum に `validate: true` を指定して、そのカラムが `null` を許容している場合にバリデーションで弾かれてしまうため、`validate: { allow_nil: true }` を追加する
+
+```ruby
+class Conversation < ActiveRecord::Base
+  enum :status, [ :active, :archived ], validate: { allow_nil: true }
+end
+```
