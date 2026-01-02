@@ -15,7 +15,9 @@ db.run("CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)"
           console.log(`${row.id}: ${row.title}`);
         },
         () => {
-          db.run("DROP TABLE books");
+          db.run("DROP TABLE books", () => {
+            db.close();
+          });
         });
       }
     });
