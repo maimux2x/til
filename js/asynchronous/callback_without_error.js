@@ -13,10 +13,11 @@ db.run("CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)"
       if (completed === total) {
         db.each("SELECT * FROM books", (err, row) => {
           console.log(`${row.id}: ${row.title}`);
+        },
+        () => {
+          db.run("DROP TABLE books");
         });
       }
     });
   }
 });
-
-
