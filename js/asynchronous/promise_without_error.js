@@ -1,26 +1,4 @@
-import sqlite3 from 'sqlite3';
-
-const db = new sqlite3.Database(':memory:')
-
-function run(db, sql) {
-  return new Promise((resolve) => {
-    db.run(sql, (error) => {
-      resolve();
-    });
-  });
-}
-
-function each(db, sql) {
-  return new Promise((resolve) => {
-    const rows = [];
-
-    db.each(sql, (error, row) => {
-      rows.push(row);
-    }, () => {
-      resolve(rows);
-    });
-  });
-}
+import { db, run, each } from './index.js'
 
 run(db, "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)").then(() => {
   const records = [];
