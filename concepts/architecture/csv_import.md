@@ -33,3 +33,11 @@ sequenceDiagram
   Rails->>SQLite: CSVImportを取得
   Rails->>Ember: インポート履歴を返す
 ```
+
+```mermaid
+classDiagram
+  CSVImport "1" -- "0..1" ActiveStorage_Attachment : has_one_attached (file)
+  ActiveStorage_Attachment "1" -- "1" ActiveStorage_Blob : belongs_to
+  CSVImport "1" ..> "*" Post : creates
+  CSVImportJob ..> CSVImport :proccesss
+```
