@@ -14,6 +14,7 @@
 sequenceDiagram
   Ember->>Ember: ファイルを選択
   Ember->>Rails: ファイルをアップロード
+  Note over Rails: POST api/csv_import
   Rails->>ActiveStorage: ファイルを保存
   Rails->>SQLite: CSVImport 作成
   Rails->>SQLite: ImportCSVJob をエンキュー
@@ -28,6 +29,7 @@ sequenceDiagram
   SolidQueue->>SQLite: CSVImport更新
   
   Ember->>Rails: インポート履歴をリクエスト
+  Note over Rails: GET api/csv_import
   Rails->>SQLite: CSVImportを取得
   Rails->>Ember: インポート履歴を返す
 ```

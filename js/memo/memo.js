@@ -1,5 +1,6 @@
 import * as fs from 'node:fs';
 import sqlite3 from 'sqlite3';
+import minimist from 'minimist';
 
 class MemoDatabase {
   constructor(dbPath = ':memory:') {
@@ -32,4 +33,6 @@ class Memo {
   }
 }
 
-memo = new Memo();
+let memo = new Memo();
+memo.add()
+console.log(memo.input);
