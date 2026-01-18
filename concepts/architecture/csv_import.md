@@ -41,3 +41,29 @@ classDiagram
   CSVImport "1" ..> "*" Post : creates
   CSVImportJob ..> CSVImport :proccesss
 ```
+```mermaid
+sequenceDiagram
+    participant Ember
+    participant ActiveStorage as Rails<br/>/rails/active_storage/direct_uploads
+    participant CSVImports as Rails<br/>/api/csv_imports
+
+    Note over Ember: ユーザーがファイル選択 → Import クリック
+
+    rect rgb(240, 240, 255)
+        Note over Ember,ActiveStorage: 1. DirectUpload（ファイルアップロード）
+        Ember->>ActiveStorage: POST /rails/active_storage/direct_uploads
+        Note right of Ember: Headers:<br/>Authorization: Bearer {token}<br/>Content-Type: application/json
+        Note right of Ember: Body:<br/>{ blob: {<br/>  filename: "sample.csv",<br/>  content_type: "text/csv",<br/>  byte_size: 113,<br/>  checksum: "xxx"<br/>}}
+        ActiveStorage-->>Ember: 200 OK
+        Note left of ActiveStorage: Response:<br/>{ signed_id: "eyJfcmFpbHM..." }
+    end
+
+    rect rgb(255, 240, 240)
+        Note over Ember,CSVImports: 2. CSVImport作成（signed_idを送信）
+        Ember->>CSVImports: POST /api/csv_imports
+        Note right of Ember: Headers:<br/>Authorization: Bearer {token}<br/>Content-Type: application/json
+        Note right of Ember: Body:<br/>{ csv_import: {<br/>  file: "eyJfcmFpbHM..."<br/>}}
+        CSVImports-->>Ember: 200 OK
+        Note left of CSVImports: Response:<br/>{ id: 1, status: "pending" }
+    end
+```
