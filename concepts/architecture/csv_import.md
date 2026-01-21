@@ -20,7 +20,7 @@ sequenceDiagram
   Rails->>SQLite: ImportCSVJob をエンキュー
   
   Note over SolidQueue: 非同期処理
-  SQLite->>SolidQueue: ジョブ取得
+  SolidQueue->>SQLite: ジョブ取得
   SolidQueue->>ActiveStorage: CSVファイルを取得
   SolidQueue->>SolidQueue: CSVをパース
   loop 各行を処理
