@@ -32,7 +32,7 @@ class PostImporter
   private
 
   def date?(date)
-    date.match?(/\d{4}-\d{2}-\d{2}/)
+    date.match?(/\d{4}-\d{2}-\d{2}\z/)
   end
 
   def valid_title?(title)
@@ -41,6 +41,8 @@ class PostImporter
 
   def log(row_number, raw_row, reason)
     raise ImportError.new(row_number:, raw_row:, reason:) 
+  rescue PostImporter::ImportError => e
+    puts "#{e.row_number}:#{e.raw_row}(#{e.message} #{e.reason})"
   end
 end
 
@@ -52,8 +54,4 @@ rows = [
 
 importer = PostImporter.new
 
-begin
-  importer.import(rows)
-rescue PostImporter::ImportError => e
-  puts "#{e.row_number}:#{e.raw_row}(#{e.message} #{e.reason})"
-end
+importer.import(rows)
