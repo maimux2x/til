@@ -1,0 +1,5 @@
+[ERROR] ZeroDivisionError: divided by 0
+2026-01-25 12:00:00 reading a book about logic
+2026-01-25-13:00:00 study about Ruby::Box
+2026-01-25-15:00:00 try CSVImport task
+2026-01-25 19:28:00 study about exception
