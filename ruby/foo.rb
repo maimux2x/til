@@ -25,34 +25,42 @@ XML
 
 class Document < Nokogiri::XML::SAX::Document
   def initialize
-    @group   = []
-    @outputs = []
+    @element = nil
+    @users = []
   end
 
-  attr_accessor :group, :outputs
-
   def start_element(name, attrs)
-    @group << name if name == 'name' || name == 'age'
-    @group << attrs if attrs.length > 0
+    @element = name
+
+    case name
+    when 'user'
+      @user = {
+        gender: attrs.to_h['gender']
+      }
+    end
   end
 
   def end_element(name)
-    if name == 'user'
-      @outputs << @group.flatten
-      @group = []
+    @element = nil
+
+    case name
+    when 'user'
+      @users << @user
+      @user = nil
     end
   end
 
   def characters(str)
-    @group << str.strip if str.strip.length > 0
+    case @element
+    when 'name'
+      @user[:name] = str
+    when 'age'
+      @user[:age] = str.to_i
+    end
   end
 
   def results
-    @outputs.map {|group|
-      group.each_slice(2).each_with_object(Hash.new) {|i, h|
-        h[i.first.to_sym] = i.last
-      }
-    }
+    @users
   end
 end
 
