@@ -17,6 +17,6 @@ classDiagram
         email
     }
 
-    User "1" --> "0..*" ReadingLog
-    ReadingLog "0..1" --> "0..*" Book
+    ReadingLog "0..*" --> "1" User
+    ReadingLog "0..*" --> "1" Book
 ```
