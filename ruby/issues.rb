@@ -53,12 +53,9 @@ Net::HTTP.start ENDPOINT.host, ENDPOINT.port, use_ssl: ENDPOINT.scheme == 'https
     payload = JSON.parse(res.body, symbolize_names: true)
 
     payload.dig(:data, :repository, :issues, :nodes).each do |issue|
-      pp '*' * 100,
-         "number: #{issue[:number]}", 
-         "title: #{issue[:title]}",
-         "url: #{issue[:url]}",
-         "created_at: #{issue[:createdAt]}",
-         '*' * 100
+      puts "##{issue[:number]} #{issue[:title]}"
+      puts "#{Time.new(issue[:createdAt]).localtime.strftime('%F %T')} #{issue[:url]}"
+      puts '-' * 100
     end
 
     break unless payload.dig(:data, :repository, :issues, :pageInfo, :hasNextPage)
