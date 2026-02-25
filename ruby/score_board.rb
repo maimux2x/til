@@ -19,9 +19,9 @@ class ScoreBoard
 end
 
 sb = ScoreBoard.new
-sb.add('Alice', 3)
-sb.add('Bob', 5)
-sb.add('Alice', 7)
+sb.add("Alice", 3)
 
-p sb.total('Alice')
-p sb.ranking
+sb = ScoreBoard.new
+sb.add("Alice", 7)
+
+p sb.total("Alice")
